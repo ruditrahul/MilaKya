@@ -1,6 +1,9 @@
+//This is the server
+
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const file = require("path");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
@@ -27,6 +30,14 @@ mongoose
   })
   .then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Server ${PORT} is up and running`);

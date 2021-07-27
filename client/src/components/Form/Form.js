@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { InputLabel, Input, FormControl, Button } from "@material-ui/core";
+import {
+  InputLabel,
+  Input,
+  FormControl,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
@@ -30,6 +37,7 @@ const places = [
 
 function Form() {
   const [placeName, setPlaceName] = useState("");
+  const [heading, setHeading] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const token = useSelector((state) => state.auth.token);
@@ -104,7 +112,7 @@ function Form() {
           <TextField
             style={{ marginTop: "0" }}
             select
-            label="Select a place where you found the item"
+            label="Where"
             onChange={handleChange}
             variant="outlined"
           >
@@ -114,6 +122,13 @@ function Form() {
               </MenuItem>
             ))}
           </TextField>
+        </FormControl>
+        <FormControl className="form-control">
+          <TextField
+            label="Heading"
+            variant="outlined"
+            onChange={(e) => setHeading(e.target.value)}
+          />
         </FormControl>
         <FormControl fullWidth="true" className="form-control">
           <TextField
@@ -135,6 +150,17 @@ function Form() {
             }}
           />
         </FormControl>
+        <div>
+          <FormControlLabel
+            control={<Checkbox name="checkedC" />}
+            onClick={() => console.log("Clicked")}
+            label="Found"
+          />
+          <FormControlLabel
+            control={<Checkbox name="checkedC" />}
+            label="Lost"
+          />
+        </div>
         <Button
           variant="contained"
           color="primary"
